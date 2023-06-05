@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:13-alpine
+    environment:
+      - POSTGRES_DB=local
+      - POSTGRES_USER=postgres
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    container_name: mulo_postgres
+    restart: always
+    command:
+      - "postgres"
+      - "-c"
+      - "listen_addresses=*"
+      - "-c"
+      - "wal_level=logical"
+      - "-c"
+      - "max_wal_senders=4"
+      - "-c"
+      - "max_replication_slots=4"
+    ports:
+      - "6001:5432"

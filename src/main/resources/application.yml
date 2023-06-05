@@ -1,0 +1,36 @@
+server:
+  port: 8082
+  shutdown: graceful
+
+spring:
+  application:
+    name: #project.name#
+    version: #project.version#
+  datasource:
+    username: postgres
+    password:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:6001}/${DB_NAME:local}?currentSchema=${DB_SCHEMA:mulo}
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    enabled: true
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:6001}/${DB_NAME:local}?currentSchema=${DB_SCHEMA:mulo}
+    user: postgres
+    password:
+    locations: filesystem:flyway/postgres
+    fail-on-missing-locations: true
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL95Dialect
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    database: postgresql
+
+jwt:
+  secret-key: ${JWT_SECRET_KEY:7436ff32fda9bc870679b4a6bcde46c20012c52eb42002b9dba45b6453ec7f54}
+  #key generated using node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+# Logging
+logging:
+  level:
+    root: ${LOG_LEVEL:INFO}
